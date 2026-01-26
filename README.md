@@ -2,7 +2,9 @@
 
 ## 1 Workflow
 
-![img](E:\笔记-md\cmake\clip_image002.png)
+<img width="865" height="205" alt="image" src="https://github.com/user-attachments/assets/e08ea3cd-629e-45ee-a497-ac8a1f7ff6d9" />
+
+
 
 Fig.1 Workflow of point cloud denoising algorithm based on density and Meta-learning parameter optimization
 
@@ -10,17 +12,20 @@ A meta-learning guided adaptive density filtering algorithm for multi-scale poin
 
 ## 2  Introduction to Algorithm UI Interface
 
-![img](E:\笔记-md\cmake\clip_image004.jpg)
+<img width="768" height="530" alt="image" src="https://github.com/user-attachments/assets/f55c9649-bb34-4e25-9a3c-81b9113527d5" />
+
+
 
 Figure 2 UI interface
 
 The interface consists of three main areas: parameter setting area, visualization control area, and log processing area. The parameter setting area includes input/output path settings and IQR parameter settings. After starting processing, the processing log area will display the processing progress and related information. After processing, the processing result column in the visualization area contains all processed point clouds. You can click "Visualize Selected Results" to visualize the specified point clouds in the processing results. You can input any point cloud file in the point cloud file, and click "Visualize Selected Files" to open any point cloud at any address.
 
-![img](E:\笔记-md\cmake\clip_image006.jpg)
+<img width="768" height="530" alt="image" src="https://github.com/user-attachments/assets/1f292788-9d76-43cf-87ee-8c788b3d298f" />
 
 Figure 3 Execution interface style
 
-![img](E:\笔记-md\cmake\clip_image008.jpg)
+<img width="448" height="350" alt="image" src="https://github.com/user-attachments/assets/7b37406b-0128-45ae-8dd4-35cc371a04e6" />
+
 
 Figure 4 Visualize the selected result point cloud
 
@@ -43,5 +48,6 @@ If there are too many holes in the point cloud, the IQR value can be moderately 
 The exe files mentioned in this document can be downloaded from the following link：
 
 链接: https://pan.baidu.com/s/1miXWk40Y8PGSF2JFkJxPFA?pwd=dna6 提取码: dna6 
+
 
  
