@@ -1,10 +1,12 @@
-# Point Cloud Denoising Algorithm v2.0
+# Meta-learning Guided Density Filtering for Robust Multi-Scale Point Cloud Denoising
 
 A sophisticated point cloud denoising system that combines density-based outlier removal with advanced machine learning optimization techniques.
 
 ## Overview
 
-This project implements a state-of-the-art point cloud denoising algorithm that automatically removes noise and outliers from 3D point cloud data. The system uses a hybrid approach combining statistical density analysis with meta-learning optimization to achieve superior denoising performance.
+Point cloud data, widely used in 3D reconstruction and industrial inspection, often suffer from multi-scale noise and outliers, compromising data quality and feature preservation. To address this, we propose a meta-learning guided adaptive density filtering algorithm. Our approach integrates multi-scale hybrid sampling with a momentum-based gradient descent meta-learning framework to dynamically optimize neighbourhood parameters for local density estimation. A density-adaptive filter, leveraging Gaussian kernel density and interquartile range analysis, hierarchically removes noise while preserving geometric features. Experimental results demonstrate a Recall metric consistently above 0.98 and a reduction in Chamfer distance by up to 80.9% compared to traditional methods, showcasing robustness in multi-scale noise removal for real-world applications such as industrial inspection.
+<img width="921" height="219" alt="image" src="https://github.com/user-attachments/assets/ceec33f6-11f5-4db6-ab28-a856653e2a5d" />
+
 
 ## Features
 
@@ -247,3 +249,4 @@ This software is provided as-is for research and development purposes.
 ## Citation
 
 If you use this algorithm in your research, please cite the accompanying technical manuscript.
+
