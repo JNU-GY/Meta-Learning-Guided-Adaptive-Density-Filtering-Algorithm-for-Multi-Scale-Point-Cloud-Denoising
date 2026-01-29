@@ -1,6 +1,6 @@
 # Meta-learning Guided Density Filtering for Robust Multi-Scale Point Cloud Denoising
 
-A sophisticated point cloud denoising system that combines density-based outlier removal with advanced machine learning optimization techniques.
+A point cloud denoising system that combines density-based outlier removal with advanced machine learning optimization techniques.
 
 ## Overview
 
@@ -249,4 +249,5 @@ This software is provided as-is for research and development purposes.
 ## Citation
 
 If you use this algorithm in your research, please cite the accompanying technical manuscript.
+
 
