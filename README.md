@@ -6,7 +6,7 @@
 
 
 
-Fig.1 Workflow of point cloud denoising algorithm based on density and Meta-learning parameter optimization
+Fig.1 Workflow of Meta-Learning Guided Density Filtering for Robust Multi-Scale Point Cloud Denoising
 
 A meta-learning guided adaptive density filtering algorithm for multi-scale point cloud denoising is proposed by integrating gradient optimization and meta-learning, composed of five core modules: Multi-scale Hybrid Sampling, Gradient Descent Optimization, Meta-Learning Optimizer, Density-Adaptive Filter, and Evaluation Function Model. Its closed-loop feedback workflow (Fig. 1) includes three stages: first, the sampling module extracts representative point cloud samples via global random, voxel down- and local random sampling, with the meta-optimizer initializing neighborhood parameter *k* using sampled data; second, the gradient descent module iteratively adjusts *k* with momentum acceleration (adaptive gradient calculation by *k* value, convergence judged by gradient changes), and the optimal *k* is input to the density-adaptive filter, which calculates Gaussian kernel density per point, sets dynamic density thresholds via IQR analysis, and detects multi-scale noise accurately; third, the evaluation function quantifies density uniformity and geometric integrity, whose weighted, standardized comprehensive score guides parameter optimization—substandard scores trigger meta-gradient descent-based re-optimization with early stopping, while qualified scores prompt the filter to output the final denoised point cloud.
 
@@ -51,4 +51,5 @@ The exe files mentioned in this document can be downloaded from the following li
 
 
  
+
 
