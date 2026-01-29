@@ -1,56 +1,249 @@
-# **Meta-Learning Guided Density Filtering for Robust Multi-Scale Point Cloud Denoising**
+# Point Cloud Denoising Algorithm v2.0
 
-## 1 Workflow
+A sophisticated point cloud denoising system that combines density-based outlier removal with advanced machine learning optimization techniques.
 
-<img width="865" height="205" alt="image" src="https://github.com/user-attachments/assets/e08ea3cd-629e-45ee-a497-ac8a1f7ff6d9" />
+## Overview
 
+This project implements a state-of-the-art point cloud denoising algorithm that automatically removes noise and outliers from 3D point cloud data. The system uses a hybrid approach combining statistical density analysis with meta-learning optimization to achieve superior denoising performance.
 
+## Features
 
-Fig.1 Workflow of Meta-Learning Guided Density Filtering for Robust Multi-Scale Point Cloud Denoising
+- **Automatic Parameter Optimization**: Uses meta-learning techniques to automatically determine optimal denoising parameters
+- **Multi-scale Sampling**: Employs intelligent sampling strategies for efficient processing of large point clouds
+- **Density-based Filtering**: Removes outliers based on local point density analysis
+- **PLY Format Support**: Full support for PLY (Polygon File Format) input and output
+- **Batch Processing**: Processes multiple point cloud files in a single run
+- **Real-time Feedback**: Provides detailed processing statistics and progress information
 
-A Meta-Learning Guided Density Filtering for Robust Multi-Scale Point Cloud Denoising is proposed by integrating gradient optimization and meta-learning, composed of five core modules: Multi-scale Hybrid Sampling, Gradient Descent Optimization, Meta-Learning Optimizer, Density-Adaptive Filter, and Evaluation Function Model. Its closed-loop feedback workflow (Fig. 1) includes three stages: first, the sampling module extracts representative point cloud samples via global random, voxel down- and local random sampling, with the meta-optimizer initializing neighborhood parameter *k* using sampled data; second, the gradient descent module iteratively adjusts *k* with momentum acceleration (adaptive gradient calculation by *k* value, convergence judged by gradient changes), and the optimal *k* is input to the density-adaptive filter, which calculates Gaussian kernel density per point, sets dynamic density thresholds via IQR analysis, and detects multi-scale noise accurately; third, the evaluation function quantifies density uniformity and geometric integrity, whose weighted, standardized comprehensive score guides parameter optimization—substandard scores trigger meta-gradient descent-based re-optimization with early stopping, while qualified scores prompt the filter to output the final denoised point cloud.
+## Core Algorithm
 
-## 2  Introduction to Algorithm UI Interface
+### Architecture
 
-<img width="768" height="530" alt="image" src="https://github.com/user-attachments/assets/f55c9649-bb34-4e25-9a3c-81b9113527d5" />
+The denoising pipeline consists of three main components:
 
+1. **Multi-scale Hybrid Sampling Module**
+2. **Meta-learning Parameter Optimizer**
+3. **Density-based Outlier Removal**
 
+### Multi-scale Sampling
 
-Figure 2 UI interface
+The algorithm employs a three-tier sampling strategy:
 
-The interface consists of three main areas: parameter setting area, visualization control area, and log processing area. The parameter setting area includes input/output path settings and IQR parameter settings. After starting processing, the processing log area will display the processing progress and related information. After processing, the processing result column in the visualization area contains all processed point clouds. You can click "Visualize Selected Results" to visualize the specified point clouds in the processing results. You can input any point cloud file in the point cloud file, and click "Visualize Selected Files" to open any point cloud at any address.
+```python
+ratios = [0.4, 0.3, 0.3]  # Global: 40%, Mid-scale: 30%, Local: 30%
+```
 
-<img width="768" height="530" alt="image" src="https://github.com/user-attachments/assets/1f292788-9d76-43cf-87ee-8c788b3d298f" />
+- **Global Sampling**: Random sampling across the entire point cloud
+- **Mid-scale Sampling**: Voxel-based downsampling to capture medium-scale features
+- **Local Sampling**: Focused sampling of remaining regions
 
-Figure 3 Execution interface style
+### Meta-learning Optimization
 
-<img width="448" height="350" alt="image" src="https://github.com/user-attachments/assets/7b37406b-0128-45ae-8dd4-35cc371a04e6" />
+The system uses a sophisticated meta-learning approach to optimize the critical parameter `k_neighbors`:
 
+- **Inner Loop**: Gradient descent optimization for individual point clouds
+- **Outer Loop**: Meta-learning across multiple samples to learn optimal initialization
+- **Adaptive Learning Rate**: Momentum-based optimization with early stopping
 
-Figure 4 Visualize the selected result point cloud
+### Density-based Outlier Removal
 
-## 3 UI usage process
+The core filtering algorithm uses statistical density analysis:
 
-**Basic process:**
+1. **Density Calculation**: Computes local point density using k-nearest neighbors
+2. **Gaussian Kernel**: Optional Gaussian weighting for smoother density estimation
+3. **IQR-based Thresholding**: Uses interquartile range (IQR) for robust outlier detection
+4. **Adaptive Threshold**: `threshold = median(density) - iqr_ratio × (Q3 - Q1)`
 
-Step 1. Select input/output path
+## Dependencies
 
-Step 2. Click on the "Start Processing" control
+### Required Packages
 
-Step 3. Select the files that need to be visualized in the processing results
+```bash
+pip install numpy
+pip install open3d
+pip install scikit-learn
+```
 
-Step 4. Click on "Visualize Selected Results"
+### System Requirements
 
-If there are too many holes in the point cloud, the IQR value can be moderately increased.
+- **Python**: 3.7+
+- **Memory**: 8GB+ RAM recommended for large point clouds
+- **Storage**: Sufficient space for input/output PLY files
 
-## 4 Attachment link
+## Installation
 
-The exe files mentioned in this document can be downloaded from the following link：
+1. Clone or download the project files
+2. Install dependencies:
+   ```bash
+   pip install numpy open3d scikit-learn
+   ```
+3. Place your PLY files in the `input/` directory
 
-链接: https://pan.baidu.com/s/1miXWk40Y8PGSF2JFkJxPFA?pwd=dna6 提取码: dna6 
+## Usage
 
+### GUI Interface (Recommended)
 
- 
+The project provides a user-friendly graphical interface:
 
+```bash
+pip install -r requirements_gui.txt
+python gui.py
+```
 
+GUI Features:
+- **Visualization**: Real-time display of original point cloud (blue) and denoised point cloud (red)
+- **Parameter Adjustment**: Slider to adjust IQR parameter (1.0-5.0)
+- **File Selection**: Convenient input/output file selection dialogs
+- **Real-time Logging**: Detailed processing progress and statistics display
 
+### Basic Usage (Command Line)
+
+```python
+from main import main
+
+# Process all PLY files in input folder
+main(
+    input_folder='input',
+    output_folder='output',
+    iqr_ratio=2.0  # Adjust denoising sensitivity (higher = more aggressive)
+)
+```
+
+### Command Line Execution
+
+```bash
+python main.py
+```
+
+The script will:
+1. Scan the `input/` folder for `.ply` files
+2. Process each file with optimized parameters
+3. Save denoised results to `output/` folder with `denoised_` prefix
+
+### Parameter Tuning
+
+- **iqr_ratio**: Controls denoising aggressiveness
+  - Lower values (1.0-1.5): Conservative denoising, preserves more points
+  - Higher values (2.0-3.0): Aggressive denoising, removes more outliers
+  - Default: 2.0
+
+## Algorithm Details
+
+### Density Calculation
+
+```python
+def calculate_point_density(self, points):
+    nn = NearestNeighbors(n_neighbors=self.k_neighbors + 1, n_jobs=-1).fit(points)
+    distances, _ = nn.kneighbors(points)
+
+    if self.use_gaussian:
+        sigma = np.mean(distances[:, 1:])
+        return np.sum(np.exp(-(distances[:, 1:] ** 2) / (2 * sigma ** 2)), axis=1)
+    else:
+        return 1 / (np.mean(distances[:, 1:], axis=1) + 1e-8)
+```
+
+### Evaluation Function
+
+The system uses a composite evaluation metric balancing density uniformity and geometric preservation:
+
+```python
+score = -(0.9 × density_std + 0.1 × geometry_score)
+```
+
+- **Density Uniformity** (90% weight): Measures how evenly distributed the cleaned points are
+- **Geometric Preservation** (10% weight): Ensures important geometric features are retained
+
+### Meta-learning Process
+
+1. **Sample Generation**: Create representative samples using multi-scale sampling
+2. **Inner Optimization**: Optimize k parameter for each sample using gradient descent
+3. **Meta-gradient Computation**: Calculate how parameter changes affect performance
+4. **Parameter Update**: Update meta-parameters using computed gradients
+
+## File Structure
+
+```
+├── main.py                 # Main processing script
+├── densityV3.py           # Core algorithm implementation
+├── input/                 # Input PLY files directory
+├── output/                # Processed output directory
+├── README.md             # This documentation
+└── manuscript file.md    # Technical manuscript
+```
+
+## Output Format
+
+The algorithm outputs standard PLY files with:
+- **Format**: Binary little-endian
+- **Precision**: Double precision coordinates (x, y, z)
+- **Compatibility**: Compatible with major 3D processing software (Meshlab, CloudCompare, etc.)
+
+Example output header:
+```
+ply
+format binary_little_endian 1.0
+comment Created by Open3D
+element vertex 674018
+property double x
+property double y
+property double z
+end_header
+```
+
+## Performance
+
+### Processing Statistics
+
+The algorithm provides detailed processing feedback:
+- Original point count
+- Optimized k parameter value
+- Processing time for parameter optimization
+- Denoising execution time
+- Final point count and removal statistics
+
+### Example Output
+
+```
+Processing China dragon.ply: Original points = 892340
+Optimized k=23 | iqr_ratio=2.0 | Time: 15.2s
+Denoise time: 8.7s
+Denoised points = 674018 (Removed 218322)
+Saved to output/denoised_China dragon.ply
+```
+
+## Technical Implementation
+
+### Key Classes
+
+- **DensityBasedOutlierRemoval**: Core denoising engine
+- **MetaLearner**: Parameter optimization system
+- **GradientDescentOptimization**: Inner loop optimizer
+
+### Memory Management
+
+- Uses Open3D for efficient point cloud operations
+- Implements parallel processing for k-nearest neighbors computation
+- Supports streaming processing for very large datasets
+
+## Troubleshooting
+
+### Common Issues
+
+1. **Memory Errors**: Reduce `k_neighbors` parameter or process smaller chunks
+2. **Poor Results**: Adjust `iqr_ratio` parameter (try values between 1.0-3.0)
+3. **Slow Processing**: The algorithm is computationally intensive; expect 10-30 seconds per 100k points
+
+### Parameter Guidelines
+
+- **k_neighbors**: Typically 10-50, automatically optimized
+- **iqr_ratio**: Start with 1.5-2.0, increase for noisy data
+- **voxel_size**: Default 0.05 works for most industrial/scanned data
+
+## License
+
+This software is provided as-is for research and development purposes.
+
+## Citation
+
+If you use this algorithm in your research, please cite the accompanying technical manuscript.
