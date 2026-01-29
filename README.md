@@ -1,4 +1,4 @@
-# **Meta-Learning Guided Adaptive Density Filtering Algorithm for Multi-Scale Point Cloud Denoising**
+# **Meta-Learning Guided Density Filtering for Robust Multi-Scale Point Cloud Denoising**
 
 ## 1 Workflow
 
@@ -51,3 +51,4 @@ The exe files mentioned in this document can be downloaded from the following li
 
 
  
+
